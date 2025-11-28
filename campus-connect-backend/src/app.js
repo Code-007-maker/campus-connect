@@ -7,7 +7,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// ROUTES
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import announcementRoutes from "./routes/announcement.route.js";
@@ -17,7 +16,6 @@ import bookingRoutes from "./routes/booking.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import forumRoutes from "./routes/forum.route.js";
 
-// Swagger Docs
 import fs from "fs";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
@@ -39,10 +37,8 @@ app.use(cors({
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("dev"));
 
-// API DOCS
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// ROUTES USE
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/announcements", announcementRoutes);
@@ -52,7 +48,6 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/forum", forumRoutes);
 
-// HEALTH CHECK
 app.get("/", (req, res) => {
     res.json({
         status: "OK",
