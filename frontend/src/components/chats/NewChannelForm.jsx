@@ -1,7 +1,7 @@
 // src/components/chats/NewChannelForm.jsx
 import React, { useState } from "react";
 import { chatService } from "../../services/chat.service";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 export default function NewChannelForm({ onClose, onCreated }){
   const [name, setName] = useState("");

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { forumService } from "../services/forum.service";
 import Composer from "../components/forums/Composer";
 import AnswerCard from "../components/forums/AnswerCard";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function ForumThread(){
   const { id } = useParams();

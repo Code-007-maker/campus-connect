@@ -1,7 +1,7 @@
 // src/components/forums/Composer.jsx
 import React, { useState } from "react";
 import { forumService } from "../../services/forum.service";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import { emitSocket } from "../../hooks/useSocket"; // helper emitter
 
 export default function Composer({ questionId, onPosted }){

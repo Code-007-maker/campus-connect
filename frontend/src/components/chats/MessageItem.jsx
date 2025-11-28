@@ -2,7 +2,7 @@
 import React from "react";
 import { chatService } from "../../services/chat.service";
 import { xpService } from "../../services/xp.service";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 export default function MessageItem({ msg, channelId }) {
   const { user } = useAuth() || {};

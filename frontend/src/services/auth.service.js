@@ -1,55 +1,61 @@
 // src/services/auth.service.js
-import api from "./api";
+// Simple demo auth service storing users & session in localStorage.
+// NOT production - replace backend calls in production.
 
-/*
-  Behavior:
-  - Try real backend endpoints (/auth/login, /auth/register, /auth/me).
-  - If network call fails (no backend running), fallback to a demo/mock response so UI continues to work.
-  - This makes the demo stable during hackathon even if backend is not ready.
-*/
+const USERS_KEY = "campus_users_v1";
+const SESSION_KEY = "campus_session_v1";
 
-const DEMO_USER = {
-  _id: "demo-user-1",
-  name: "Demo Student",
-  email: "demo@student.edu",
-  role: "student",
-};
+function seed() {
+  if (localStorage.getItem(USERS_KEY)) return;
+  const demo = [
+    { id: "s_demo", name: "Demo Student", email: "student@demo.edu", role: "student", password: "student123" },
+    { id: "f_demo", name: "Demo Faculty", email: "faculty@demo.edu", role: "faculty", password: "faculty123" },
+    { id: "a_demo", name: "Demo Admin", email: "admin@demo.edu", role: "admin", password: "admin123" }
+  ];
+  localStorage.setItem(USERS_KEY, JSON.stringify(demo));
+}
 
-const makeToken = () => "demo-token-" + Date.now();
+function loadUsers() {
+  seed();
+  return JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+}
+function saveUsers(list) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(list));
+}
 
 export const authService = {
-  login: async (creds) => {
-    try {
-      const res = await api.post("/auth/login", creds);
-      // Expect backend: { user, token }
-      return res;
-    } catch (err) {
-      // Network or server error -> fallback demo (but still log)
-      console.warn("authService.login fallback to DEMO due to:", err);
-      const demo = { user: { ...DEMO_USER, email: creds.email || DEMO_USER.email }, token: makeToken() };
-      return demo;
-    }
+  async register({ name, email, password, role = "student" }) {
+    const users = loadUsers();
+    if (users.find(u => u.email === email)) throw new Error("Email already used");
+    const u = { id: (role[0] + Date.now()), name, email, password, role };
+    users.unshift(u);
+    saveUsers(users);
+    // auto-login
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ token: "demo-token-" + Date.now(), user: { id: u.id, name: u.name, email: u.email, role: u.role } }));
+    return { user: { id: u.id, name: u.name, email: u.email, role: u.role } };
   },
 
-  register: async (payload) => {
-    try {
-      const res = await api.post("/auth/register", payload);
-      return res;
-    } catch (err) {
-      console.warn("authService.register fallback to DEMO due to:", err);
-      // Return mock success and auto-login the demo user with given name/email
-      const demo = { user: { ...DEMO_USER, name: payload.name || DEMO_USER.name, email: payload.email || DEMO_USER.email }, token: makeToken() };
-      return demo;
-    }
+  async login({ email, password }) {
+    const users = loadUsers();
+    const found = users.find(u => u.email === email && u.password === password);
+    if (!found) throw new Error("Invalid credentials");
+    const token = "demo-token-" + Date.now();
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ token, user: { id: found.id, name: found.name, email: found.email, role: found.role } }));
+    return { user: { id: found.id, name: found.name, email: found.email, role: found.role } };
   },
 
-  me: async () => {
-    try {
-      const res = await api.get("/auth/me");
-      return res;
-    } catch (err) {
-      console.warn("authService.me fallback to DEMO due to:", err);
-      return { user: DEMO_USER };
-    }
+  logout() {
+    localStorage.removeItem(SESSION_KEY);
   },
+
+  getSession() {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+  },
+
+  currentUser() {
+    const s = authService.getSession();
+    return s?.user || null;
+  }
 };

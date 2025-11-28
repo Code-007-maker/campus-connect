@@ -1,7 +1,7 @@
 // frontend/src/components/ui/Navbar.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 export default function Navbar() {
   const { user, logout } = useAuth() || {};

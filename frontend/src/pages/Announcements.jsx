@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AnnouncementCard from "../components/announcements/AnnouncementCard";
 import AnnouncementForm from "../components/announcements/AnnouncementForm";
 import { announcementService } from "../services/announcement.service";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 import { useSocket } from "../hooks/useSocket";
 
 export default function Announcements(){

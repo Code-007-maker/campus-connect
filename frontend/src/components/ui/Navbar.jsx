@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import VoiceNav from "./VoiceNav";

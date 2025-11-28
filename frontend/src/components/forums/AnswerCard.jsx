@@ -3,7 +3,7 @@ import React from "react";
 import { forumService } from "../../services/forum.service";
 import { xpService } from "../../services/xp.service";
 import { gamificationService } from "../../services/gamification.service";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 export default function AnswerCard({ answer, questionId, onUpdated }){
   const { user } = useAuth() || {};

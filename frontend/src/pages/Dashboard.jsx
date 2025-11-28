@@ -1,7 +1,7 @@
 // src/pages/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 import Toast from "../components/ui/Toast";
 
 const EVENTS = [

@@ -6,7 +6,7 @@ import ProfileXP from "../components/gamification/ProfileXP.jsx";
 
 import Badges from "../components/gamification/Badges";
 import LeaderboardCard from "../components/gamification/LeaderboardCard";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function Leaderboard() {
   const { user } = useAuth() || { user: "Demo Student" };

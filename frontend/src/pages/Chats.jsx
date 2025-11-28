@@ -5,7 +5,7 @@ import ChatWindow from "../components/chats/ChatWindow";
 import PresenceBar from "../components/chats/PresenceBar";
 import { useParams } from "react-router-dom";
 import { chatService } from "../services/chat.service";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 
 export default function Chats() {
   const { id } = useParams();

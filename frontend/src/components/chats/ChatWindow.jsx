@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { chatService } from "../../services/chat.service";
 import MessageItem from "./MessageItem";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import { xpService } from "../../services/xp.service";
 
 export default function ChatWindow({ channelId }) {

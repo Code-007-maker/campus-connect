@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { forumService } from "../../services/forum.service";
 import ThreadCard from "./ThreadCard";
 import Composer from "./Composer";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 
 export default function ForumList(){
   const [questions, setQuestions] = useState([]);

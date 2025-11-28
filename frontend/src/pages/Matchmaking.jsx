@@ -6,7 +6,7 @@ import RecommendedUsers from "./components/matchmaking/RecommendedUsers.jsx";
 import CreateProjectModal from "./components/matchmaking/CreateProjectModal.jsx";
 import Filters from "./components/matchmaking/Filters.jsx";
 
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth.jsx";
 import { xpService } from "../services/xp.service";
 
 export default function Matchmaking() {

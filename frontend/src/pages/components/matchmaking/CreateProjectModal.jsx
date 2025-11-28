@@ -1,7 +1,7 @@
 // src/components/matchmaking/CreateProjectModal.jsx
 import React, { useState } from "react";
 import { projectService } from "../../../services/project.service";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth.jsx";
 import { xpService } from "../../../services/xp.service";
 
 export default function CreateProjectModal({ onClose, onCreated }) {
