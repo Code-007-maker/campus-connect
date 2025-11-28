@@ -2,7 +2,7 @@
   "name": "campus-connect-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,15 +10,21 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "experimentalAllowImplicitJSONImports": true,
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "firebase-admin": "^13.6.0",
     "googleapis": "^166.0.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
-    "socket.io": "^4.8.1"
+    "morgan": "^1.10.1",
+    "socket.io": "^4.8.1",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.18.3"
   }
 }

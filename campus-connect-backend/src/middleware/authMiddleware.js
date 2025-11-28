@@ -1,7 +1,7 @@
 // src/middleware/authMiddleware.js
 import jwt from 'jsonwebtoken';
 import env from '../config/env.js';
-import User from './models/User.model.js'; // make sure model file exists
+import User from '../models/User.model.js'; // make sure model file exists
 import logger from '../utils/logger.js';
 
 /**

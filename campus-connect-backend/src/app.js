@@ -1,38 +1,68 @@
-// src/app.js
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import helmet from 'helmet';
+// app.js
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import dotenv from "dotenv";
 
-import env from './config/env.js';
-import authMiddleware from './middleware/authMiddleware.js';
-import roleMiddleware from './middleware/roleMiddleware.js';
-import errorHandler from './middleware/errorHandler.js';
+dotenv.config();
 
-import authRoutes from './routes/auth.routes.js';
-import announcementRoutes from './routes/announcement.routes.js';
-// ...other routes
+// ROUTES
+import authRoutes from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
+import announcementRoutes from "./routes/announcement.route.js";
+import calendarRoutes from "./routes/calendar.route.js";
+import resourceRoutes from "./routes/resource.route.js";
+import bookingRoutes from "./routes/booking.route.js";
+import notificationRoutes from "./routes/notification.route.js";
+import forumRoutes from "./routes/forum.route.js";
+
+// Swagger Docs
+import fs from "fs";
+import path from "path";
+import swaggerUi from "swagger-ui-express";
+
+const __dirname = path.resolve();
+const swaggerPath = path.join(__dirname, "./docs/swagger.json");
+
+const swaggerDocument = JSON.parse(
+  fs.readFileSync(swaggerPath, "utf-8")
+);
 
 const app = express();
 
-// Middlewares
 app.use(helmet());
-app.use(cors({ origin: env.SOCKET_ORIGIN, credentials: true }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cors({
+    origin: process.env.SOCKET_ORIGIN || "*",
+    credentials: true
+}));
+app.use(express.json({ limit: "10mb" }));
+app.use(morgan("dev"));
 
-// Public routes
-app.use('/api/auth', authRoutes);
+// API DOCS
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Protected routes (example)
-app.use('/api/announcements', authMiddleware, announcementRoutes);
-// or per-route use roleMiddleware(['admin','faculty']) where needed
+// ROUTES USE
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/announcements", announcementRoutes);
+app.use("/api/calendar", calendarRoutes);
+app.use("/api/resources", resourceRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/forum", forumRoutes);
 
-// 404
-app.use((req, res, next) => res.status(404).json({ success: false, error: 'Not found' }));
+// HEALTH CHECK
+app.get("/", (req, res) => {
+    res.json({
+        status: "OK",
+        message: "Campus Management API Running 🚀"
+    });
+});
 
-// error handler
-app.use(errorHandler);
+// 404 Handler
+app.use((req, res) => {
+    res.status(404).json({ error: "Route not found" });
+});
 
 export default app;

@@ -1,47 +1,43 @@
-// src/config/env.js
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
+dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export const {
+  PORT,
+  MONGO_URI,
+  JWT_SECRET,
+  NODE_ENV,
+  REDIS_URL,
 
-const envPath = process.env.NODE_ENV === 'test'
-  ? path.join(process.cwd(), '.env.test')
-  : path.join(process.cwd(), '.env');
+  // Google Calendar
+  GOOGLE_CLIENT_EMAIL,
+  GOOGLE_PRIVATE_KEY,
+  GOOGLE_PROJECT_ID,
+  GOOGLE_CALENDAR_ID,
 
-dotenv.config({ path: envPath });
+  // Push Notifications
+  FCM_SERVER_KEY,
 
-const required = [
-  'NODE_ENV',
-  'PORT',
-  'MONGO_URI',
-  'JWT_SECRET',
-  'JWT_EXPIRES_IN',
-  'GOOGLE_CLIENT_EMAIL',
-  'GOOGLE_PRIVATE_KEY',
-  'GOOGLE_PROJECT_ID',
-  'GOOGLE_CALENDAR_ID',
-  'SOCKET_ORIGIN'
-];
+  // Optional
+  CLOUDINARY_URL,
+  SENDGRID_API_KEY
+} = process.env;
 
-const missing = required.filter((k) => !process.env[k]);
-if (missing.length) {
-  throw new Error(`Missing environment variables: ${missing.join(', ')}`);
-}
+// Missing constant added ↓
+export const SOCKET_ORIGIN = process.env.SOCKET_ORIGIN || "*";
 
+// Default export structure
 export default {
-  NODE_ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT || 4000,
-  MONGO_URI: process.env.MONGO_URI,
-  JWT_SECRET: process.env.JWT_SECRET,
-  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
-  GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL,
-  GOOGLE_PRIVATE_KEY: (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
-  GOOGLE_PROJECT_ID: process.env.GOOGLE_PROJECT_ID,
-  GOOGLE_CALENDAR_ID: process.env.GOOGLE_CALENDAR_ID || "primary",
-  SOCKET_ORIGIN: process.env.SOCKET_ORIGIN || "*",
-  BASE_URL: process.env.BASE_URL || `http://localhost:${process.env.PORT || 4000}`,
-  NODE_LOG_LEVEL: process.env.NODE_LOG_LEVEL || "info",
-  FCM_SERVER_KEY: process.env.FCM_SERVER_KEY || ""
+  PORT: PORT || 5000,
+  MONGO_URI,
+  JWT_SECRET,
+  NODE_ENV,
+  REDIS_URL,
+  GOOGLE_CLIENT_EMAIL,
+  GOOGLE_PRIVATE_KEY,
+  GOOGLE_PROJECT_ID,
+  GOOGLE_CALENDAR_ID,
+  FCM_SERVER_KEY,
+  CLOUDINARY_URL,
+  SENDGRID_API_KEY,
+  SOCKET_ORIGIN,
 };
