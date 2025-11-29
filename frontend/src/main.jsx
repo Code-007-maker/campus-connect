@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./hooks/useAuth.jsx";
 import { I18nProvider } from "./i18n/index.jsx";
-import { ThemeProvider } from "./context/ThemeContext.jsx";  // <-- ADD THIS
+import { ThemeProvider } from "./context/ThemeContext.jsx";  
 
 import "./index.css";
 

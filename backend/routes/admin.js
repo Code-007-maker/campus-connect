@@ -2,11 +2,34 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const User = require('../models/User');
-const { authMiddleware, requireRole } = require('../middleware/auth');
+const { authMiddleware} = require('../middleware/auth');
 const { sendTeacherInvite } = require('../utils/mailer');
+const { requireRole } = require("../middleware/auth");
+const Booking = require("../models/Booking");
+
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
+
+router.get(
+  "/bookings",
+  authMiddleware,
+  requireRole("admin"),
+  async (req, res) => {
+    try {
+      const bookings = await Booking.find({})
+        .populate("student", "name email")
+        .populate("resource", "name type");
+
+      return res.json({ bookings });
+    } catch (err) {
+      console.error("Bookings fetch error:", err);
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+module.exports = router;
 
 // Admin-only route to create a faculty/teacher by email and send auto-generated password
 router.post('/add-teacher', authMiddleware, requireRole('admin'), async (req, res) => {
@@ -46,6 +69,32 @@ router.post('/add-teacher', authMiddleware, requireRole('admin'), async (req, re
     return res.status(500).json({ message: 'Server error' });
   }
 });
+
+// DELETE student (admin only)
+router.delete(
+  "/students/:id",
+  authMiddleware,
+  requireRole("admin"),
+  async (req, res) => {
+    try {
+      const student = await User.findOne({
+        _id: req.params.id,
+        role: "student"
+      });
+
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
+
+      await student.deleteOne();
+
+      return res.json({ message: "Student deleted successfully" });
+    } catch (err) {
+      console.error("Delete error:", err);
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+);
 
 // GET /api/admin/teachers
 // Get list of all faculty members (teachers)
@@ -100,6 +149,48 @@ router.get('/students', authMiddleware, requireRole("admin"), async (req, res) =
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.post(
+  "/bookings/approve/:id",
+  authMiddleware,
+  requireRole("admin"),
+  async (req, res) => {
+    try {
+      const booking = await Booking.findById(req.params.id);
+      if (!booking) return res.status(404).json({ message: "Not found" });
+
+      booking.status = "approved";
+      await booking.save();
+
+      await Resource.findByIdAndUpdate(booking.resource, { available: false });
+
+      return res.json({ message: "Booking approved" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+router.post(
+  "/bookings/reject/:id",
+  authMiddleware,
+  requireRole("admin"),
+  async (req, res) => {
+    try {
+      const booking = await Booking.findById(req.params.id);
+      if (!booking) return res.status(404).json({ message: "Not found" });
+
+      booking.status = "rejected";
+      await booking.save();
+
+      return res.json({ message: "Booking rejected" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
 
 
 module.exports = router;

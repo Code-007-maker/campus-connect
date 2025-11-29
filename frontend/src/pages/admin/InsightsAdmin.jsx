@@ -31,6 +31,21 @@ export default function InsightsAdmin() {
       });
     }
   };
+const approve = async (id) => {
+  await fetch(`${API}/api/admin/bookings/approve/${id}`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  loadBookings();
+};
+
+const reject = async (id) => {
+  await fetch(`${API}/api/admin/bookings/reject/${id}`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  loadBookings();
+};
 
   const markReturned = async (id) => {
     if (!confirm("Mark this as returned?")) return;
@@ -109,21 +124,38 @@ export default function InsightsAdmin() {
                     <td className="p-3">
                       <StatusBadge status={b.status} />
                     </td>
+<td className="p-3 text-right">
+  {b.status === "pending" && (
+    <div className="flex gap-2 justify-end">
+      <button
+        onClick={() => approve(b._id)}
+        className="px-3 py-1 bg-blue-600 text-white rounded-md"
+      >
+        Approve
+      </button>
+      <button
+        onClick={() => reject(b._id)}
+        className="px-3 py-1 bg-red-600 text-white rounded-md"
+      >
+        Reject
+      </button>
+    </div>
+  )}
 
-                    <td className="p-3 text-right">
-                      {b.status === "approved" && (
-                        <button
-                          onClick={() => markReturned(b._id)}
-                          className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700"
-                        >
-                          Mark Returned
-                        </button>
-                      )}
+  {b.status === "approved" && (
+    <button
+      onClick={() => markReturned(b._id)}
+      className="px-3 py-1 bg-green-600 text-white rounded-md"
+    >
+      Mark Returned
+    </button>
+  )}
 
-                      {b.status !== "approved" && (
-                        <span className="text-slate-400 text-xs italic">No action</span>
-                      )}
-                    </td>
+  {(b.status === "late" || b.status === "returned" || b.status === "rejected") && (
+    <span className="text-slate-400 text-xs italic">No action</span>
+  )}
+</td>
+
                   </tr>
                 ))
               )}

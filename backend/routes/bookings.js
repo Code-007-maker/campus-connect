@@ -87,4 +87,28 @@ router.post("/:id/returned", authMiddleware, requireRole("admin"), async (req, r
   }
 });
 
+router.post(
+  "/return/:id",
+  authMiddleware,
+  requireRole("admin"),
+  async (req, res) => {
+    try {
+      const booking = await Booking.findById(req.params.id);
+      if (!booking) return res.status(404).json({ message: "Not found" });
+
+      booking.status = "returned";
+      await booking.save();
+
+      await Resource.findByIdAndUpdate(booking.resource, { available: true });
+
+      return res.json({ message: "Marked returned" });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+
+
 module.exports = router;

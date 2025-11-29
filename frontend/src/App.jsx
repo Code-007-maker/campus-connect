@@ -6,7 +6,7 @@ import LanguageToggle from "./components/ui/LanguageSwitcher";
 import VoiceNav from "./components/ui/VoiceNav";
 
 export default function App(){
-  // persist theme
+  
   useEffect(()=>{
     const dark = localStorage.getItem("theme") === "dark";
     document.documentElement.classList.toggle("dark", dark);
