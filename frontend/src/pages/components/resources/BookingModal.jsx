@@ -1,57 +1,102 @@
-// src/components/resources/BookingModal.jsx
 import React, { useState } from "react";
-import { bookingService } from "../../services/booking.service";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function BookingModal({ resource, onClose, onBooked }) {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const { token } = useAuth();
+  const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  const submit = async () => {
+  const submitBooking = async () => {
     setErr("");
-    if (!from || !to) { setErr("Choose start and end times"); return; }
-    if (new Date(from) >= new Date(to)) { setErr("End must be after start"); return; }
+
+    if (!start || !end) {
+      setErr("Please select start and end time.");
+      return;
+    }
+
+    if (new Date(end) <= new Date(start)) {
+      setErr("End time must be later than start time.");
+      return;
+    }
+
     setLoading(true);
     try {
-      await bookingService.create?.({ resourceId: resource._id, from, to });
-      onBooked?.();
-    } catch (e) {
-      console.warn("Booking fallback to demo", e);
-      onBooked?.();
-    } finally {
-      setLoading(false);
+      const res = await fetch(`${API}/api/bookings`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          resourceId: resource._id,
+          start,
+          end
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErr(data.message || "Booking failed");
+        setLoading(false);
+        return;
+      }
+
+      onBooked(); // call success handler
+    } catch (err) {
+      setErr("Something went wrong.");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="relative w-full max-w-2xl bg-white/95 rounded-2xl p-6 shadow-2xl border border-white/30">
-        <div className="flex justify-between items-start">
-          <div>
-            <h3 className="text-xl font-bold">Book — {resource.name}</h3>
-            <p className="text-sm text-slate-600 mt-1">{resource.location}</p>
-          </div>
-          <button onClick={onClose} className="text-slate-700 hover:text-black">✕</button>
-        </div>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md border"
+           style={{ borderColor: "var(--glass-border)" }}>
+        
+        <div className="text-xl font-bold mb-2">Book Resource</div>
+        <div className="text-slate-600 mb-4">{resource.name}</div>
 
-        {err && <div className="mt-4 p-3 bg-rose-100 text-rose-800 rounded">{err}</div>}
+        {/* Start Time */}
+        <label className="block text-sm font-medium">Start Time</label>
+        <input
+          type="datetime-local"
+          className="w-full mt-1 p-2 border rounded-lg"
+          value={start}
+          onChange={e => setStart(e.target.value)}
+        />
 
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div>
-            <label className="text-sm text-slate-700">From</label>
-            <input type="datetime-local" value={from} onChange={(e) => setFrom(e.target.value)} className="w-full p-3 rounded border" />
-          </div>
-          <div>
-            <label className="text-sm text-slate-700">To</label>
-            <input type="datetime-local" value={to} onChange={(e) => setTo(e.target.value)} className="w-full p-3 rounded border" />
-          </div>
-        </div>
+        {/* End Time */}
+        <label className="block text-sm font-medium mt-4">End Time</label>
+        <input
+          type="datetime-local"
+          className="w-full mt-1 p-2 border rounded-lg"
+          value={end}
+          onChange={e => setEnd(e.target.value)}
+        />
 
-        <div className="flex justify-end gap-3 mt-6">
-          <button onClick={onClose} className="px-4 py-2 rounded-md border">Cancel</button>
-          <button onClick={submit} disabled={loading} className="px-4 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-pink-600 text-white shadow">
-            {loading ? "Booking..." : "Confirm Booking"}
+        {/* Error message */}
+        {err && <div className="text-sm text-red-600 mt-3">{err}</div>}
+
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 rounded-lg border"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={submitBooking}
+            disabled={loading}
+            className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            {loading ? "Booking..." : "Confirm"}
           </button>
         </div>
       </div>

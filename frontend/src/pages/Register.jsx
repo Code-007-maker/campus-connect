@@ -25,7 +25,7 @@ export default function Register() {
     <div className="w-full">
       <div className="mb-6 text-center">
         <h2 className="text-2xl font-extrabold text-slate-900">Create account</h2>
-        <p className="text-sm text-slate-500">Register as Student, Faculty or Admin (demo)</p>
+        <p className="text-sm text-slate-500">Register as Student</p>
       </div>
 
       <form onSubmit={onSubmit} className="space-y-4">
@@ -52,8 +52,6 @@ export default function Register() {
           <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})}
             className="mt-1 block w-full px-4 py-3 rounded-lg border bg-white/80 focus:ring-2 focus:ring-emerald-400 transition">
             <option value="student">Student</option>
-            <option value="faculty">Faculty</option>
-            <option value="admin">Admin</option>
           </select>
         </div>
 
