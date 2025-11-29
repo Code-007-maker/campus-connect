@@ -72,6 +72,13 @@ export const projectService = {
       window.__campus_bus.dispatchEvent(new CustomEvent("project:joined", { detail: { projectId, user } }));
     return p;
   },
+requestJoin: async (projectId, username) => {
+  return fetch(`/api/projects/${projectId}/request`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  }).then((r) => r.json());
+},
 
   async recommendUsers(skills=[]){
     // mock recommended user profiles

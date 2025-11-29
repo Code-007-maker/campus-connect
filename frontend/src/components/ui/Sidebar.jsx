@@ -6,7 +6,7 @@ const linkStyle = ({ isActive }) => `block px-4 py-2 rounded-lg ${isActive ? "bg
 
 export default function Sidebar() {
   return (
-    <nav className="sticky top-20">
+    <nav className="sticky top-20 overscroll-y-auto">
       <div className="bg-white rounded-2xl p-4 shadow border" style={{ borderColor: "var(--glass-border)" }}>
         <div className="mb-4 text-slate-500 uppercase tracking-wide text-xs">Navigate</div>
         <ul className="space-y-2">

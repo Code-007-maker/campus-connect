@@ -15,15 +15,22 @@ export default function AdminDashboard() {
   ];
 
   const initialFaculty = [
-    { id: 'f1', name: 'Dr. Asha Verma', email: 'asha@college.edu', dept: 'Computer Science' },
-    { id: 'f2', name: 'Dr. Ravi Patel', email: 'ravi@college.edu', dept: 'Physics' }
+    { id: 'f1', name: 'Dr. Mitul Rishi', email: 'mr@college.edu', dept: 'Computer Science' },
+    { id: 'f2', name: 'Dr. Arbaj Khan', email: 'krishna@college.edu', dept: 'Physics' },
+    { id: 'f1', name: 'Dr. Asha Verma', email: 'asha@college.edu', dept: 'Astrophysics' },
+    { id: 'f2', name: 'Dr. Ravi Patel', email: 'ravi@college.edu', dept: 'AI-ML' }
   ];
 
   const initialStudents = [
-    { id: 's1', studentId: '2025CS001', name: 'Arjun Singh', email: 'arjun@college.edu', xp: 1200, enrolledEvents: ['e1'], bookings: [{ type: 'book', title: 'Operating Systems Textbook' }], equipments: [{ name: 'Camera' }] },
+    { id: 's1', studentId: '2025CS001', name: 'Mitul Rishi', email: 'arjun@college.edu', xp: 1200, enrolledEvents: ['e1'], bookings: [{ type: 'book', title: 'Operating Systems Textbook' }], equipments: [{ name: 'Camera' }] },
     { id: 's2', studentId: '2025ME002', name: 'Neha Rao', email: 'neha@college.edu', xp: 980, enrolledEvents: ['e1'], bookings: [], equipments: [] },
     { id: 's3', studentId: '2025CS003', name: 'Rohit Kumar', email: 'rohit@college.edu', xp: 1450, enrolledEvents: [], bookings: [], equipments: [] }
-  ];
+  
+  , { id: 's1', studentId: '2025CS041', name: 'Arjun Singh', email: 'arjun@college.edu', xp: 1100, enrolledEvents: ['e1'], bookings: [{ type: 'book', title: 'Operating Systems Textbook' }], equipments: [{ name: 'Camera' }] },
+    { id: 's2', studentId: '2025ME052', name: 'Rudraksh', email: 'neha@college.edu', xp: 980, enrolledEvents: ['e1'], bookings: [], equipments: [] },
+    { id: 's3', studentId: '2025CS061', name: 'Rohan Kumar', email: 'rohit@college.edu', xp: 1150, enrolledEvents: [], bookings: [], equipments: [] }
+
+];
 
   // State
   const [announcements, setAnnouncements] = useState(initialAnnouncements);
@@ -150,7 +157,7 @@ export default function AdminDashboard() {
 
           <div className="flex items-center gap-3">
             <button onClick={() => { setShowAnnModal(true); setEditingAnn(null); }} className="px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-teal-500 text-white font-semibold shadow hover:scale-105 transition">Create Announcement</button>
-            <button onClick={() => { setShowEventModal(true); setEditingEvent(null); }} className="px-4 py-2 rounded-lg border border-slate-200 bg-white hover:shadow transition">Create Event</button>
+            <button onClick={() => { setShowEventModal(true); setEditingEvent(null); }} className= "px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-teal-500 text-white font-semibold shadow hover:scale-105 transition">Create Event</button>
           </div>
         </div>
       </header>
@@ -284,7 +291,7 @@ export default function AdminDashboard() {
                     <div className="text-xs text-slate-500">{f.dept} • {f.email}</div>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => updateFaculty(f.id, { name: f.name + ' (Updated)' })} className="px-3 py-1 rounded-md text-sm bg-indigo-50 text-indigo-700">Edit</button>
+                    <button onClick={() => updateFaculty(f.id, { name: f.name })} className="px-3 py-1 rounded-md text-sm bg-indigo-50 text-indigo-700">Edit</button>
                     <button onClick={() => deleteFaculty(f.id)} className="px-3 py-1 rounded-md text-sm bg-rose-50 text-rose-600">Remove</button>
                   </div>
                 </li>

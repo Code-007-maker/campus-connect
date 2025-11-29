@@ -193,4 +193,32 @@ router.post(
 );
 
 
+router.post("/bookings/approve/:id", async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate("student").populate("resource");
+
+    booking.status = "approved";
+    await booking.save();
+
+    // 📧 Send email
+    await sendMail(
+      booking.student.email,
+      "Your Booking Has Been Approved ✔",
+      `
+        <h2>Booking Approved!</h2>
+        <p>Hello <b>${booking.student.name}</b>,</p>
+        <p>Your booking for <b>${booking.resource.name}</b> has been approved.</p>
+        <p><b>Start:</b> ${new Date(booking.start).toLocaleString()}<br/>
+        <b>End:</b> ${new Date(booking.end).toLocaleString()}</p>
+        <br/>Thank you,<br/>Campus Connect System
+      `
+    );
+
+    res.json({ message: "Approved and email sent" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;
