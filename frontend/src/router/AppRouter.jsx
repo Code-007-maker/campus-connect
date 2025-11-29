@@ -103,10 +103,10 @@ const ProtectedRoute = ({ children, allowed }) => {
 /* PublicFrame for login/register (no global navbar) */
 function PublicFrame({ children }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b dark:text-white flex flex-col">
       <div className="flex-1 grid place-items-center ">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl p-8 shadow-2xl border" style={{ borderColor: "var(--glass-border)" }}>
+          <div className="bg-white dark:bg-black dark:text-white rounded-2xl p-8 shadow-2xl border" style={{ borderColor: "var(--glass-border)" }}>
             {children}
           </div>
         </div>

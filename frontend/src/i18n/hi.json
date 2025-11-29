@@ -1,10 +1,64 @@
 {
-  "announcements": "घोषणाएँ",
-  "login": "लॉगिन",
-  "logout": "लॉगआउट",
-  "email": "ईमेल",
-  "password": "पासवर्ड",
-  "book": "बुक करें",
-  "resources": "संसाधन",
-  "calendar": "कैलेंडर"
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "announcements": "घोषणाएँ",
+    "calendar": "कैलेंडर",
+    "chats": "ग्रुप चैट",
+    "matchmaking": "प्रोजेक्ट मेकमेकिन्ग",
+    "resources": "संसाधन",
+    "leaderboard": "लीडरबोर्ड",
+    "admin": "एडमिन होम"
+  },
+  "auth": {
+    "login": "लॉगिन",
+    "logout": "लॉगआउट",
+    "signup": "साइन अप",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "signing_in": "साइन इन हो रहा है...",
+    "create_account": "खाता बनाएं"
+  },
+  "announcements": {
+    "title": "घोषणाएँ",
+    "subtitle": "कॉलेज की ताज़ा सूचनाएँ और परिपत्र",
+    "no_items": "अभी कोई घोषणाएँ नहीं"
+  },
+  "resources": {
+    "title": "संसाधन",
+    "subtitle": "लैब, उपकरण और कमरों का आरक्षण करें"
+  },
+  "calendar": {
+    "title": "कैलेंडर",
+    "subtitle": "इवेंट्स, शेड्यूल और डेडलाइंस"
+  },
+  "leaderboard": {
+    "title": "लीडरबोर्ड",
+    "subtitle": "शीर्ष प्रतिभागी और प्रदर्शन"
+  },
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "subtitle": "कैम्पस घटनाओं की खोज करें, संसाधन आरक्षित करें, क्लब जॉइन करें"
+  },
+  "buttons": {
+    "create_announcement": "घोषणा बनाएं",
+    "book_room": "स्टडी रूम बुक करें",
+    "view_announcements": "घोषणाएँ देखें",
+    "add_faculty": "फैकल्टी जोड़ें"
+  },
+  "admin": {
+    "console_title": "एडमिन कंसोल",
+    "console_subtitle": "Campus Connect प्लेटफ़ॉर्म के लिए पूर्ण नियंत्रण पैनल।",
+    "students": "छात्र",
+    "faculty": "फैकल्टी",
+    "announcements": "घोषणाएँ",
+    "overdue_resources": "विलंबित संसाधन",
+    "recent_activity": "हाल की गतिविधि",
+    "quick_actions": "त्वरित क्रियाएँ"
+  },
+  "placeholders": {
+    "search": "खोजें..."
+  },
+  "misc": {
+    "no_badges": "कौशल चिन्ह अभी नहीं मिले।"
+  }
 }

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+* {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
 /* Theme variables */
 :root{
   --accent-start:#06b6d4;

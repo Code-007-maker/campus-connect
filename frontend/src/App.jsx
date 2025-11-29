@@ -2,7 +2,7 @@
 import AppRouter from "./router/AppRouter";
 import Navbar from "./components/ui/Navbar";
 import ThemeToggle from "./components/ui/ThemeToggle";
-import LanguageToggle from "./components/ui/LanguageToggle";
+import LanguageToggle from "./components/ui/LanguageSwitcher";
 import VoiceNav from "./components/ui/VoiceNav";
 
 export default function App(){

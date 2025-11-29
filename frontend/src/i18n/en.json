@@ -1,10 +1,75 @@
 {
-  "announcements": "Announcements",
-  "login": "Login",
-  "logout": "Logout",
-  "email": "Email",
-  "password": "Password",
-  "book": "Book",
-  "resources": "Resources",
-  "calendar": "Calendar"
+  "nav": {
+    "announcements": "Announcements",
+    "calendar": "Calendar",
+    "chats": "Group Chat",
+    "matchmaking": "Project Matchmaking",
+    "resources": "Resources",
+    "leaderboard": "Leaderboard",
+    "admin": "Admin Home",
+    "dashboard": "Dashboard"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "create_account": "Create account",
+    "already_account": "Already have an account?"
+  },
+  "hero": {
+    "title_line1": "CampusConnect —",
+    "title_line2": "Connect • Learn • Build",
+    "subtitle": "A one-stop platform to discover campus events, book resources and collaborate with peers."
+  },
+  "buttons": {
+    "book_room": "Book a Room — Try Demo",
+    "view_announcements": "View Announcements",
+    "register": "Register",
+    "create_announcement": "Create Announcement",
+    "add_faculty": "Add Faculty"
+  },
+  "announcements": {
+    "title": "Announcements",
+    "subtitle": "Latest news and notices from across campus.",
+    "no_items": "No announcements yet."
+  },
+  "calendar": {
+    "title": "Calendar",
+    "no_events": "No events."
+  },
+  "resources": {
+    "title": "Resources",
+    "subtitle": "Find and book rooms, equipment and lab stations.",
+    "rooms": "Rooms",
+    "equipment": "Equipment",
+    "labs": "Lab stations",
+    "book_now": "Book now"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "subtitle": "Top contributors — earn XP by posting, answering and participating."
+  },
+  "profile": {
+    "level": "Level",
+    "xp": "XP",
+    "no_badges": "No badges yet — participate to earn rewards!"
+  },
+  "gamification": {
+    "badges": {
+      "nightowl": "Night Owl",
+      "knowledge_miner": "Knowledge Miner",
+      "help_guru": "Help Guru"
+    }
+  },
+  "generic": {
+    "search": "Search",
+    "view": "View",
+    "details": "Details",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
 }
